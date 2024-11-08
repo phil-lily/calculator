@@ -1,171 +1,155 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-  <meta http-equiv="Content-Style-Type" content="text/css">
-  <title></title>
-  <meta name="Generator" content="Cocoa HTML Writer">
-  <meta name="CocoaVersion" content="2487.6">
-  <style type="text/css">
-    p.p1 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica}
-    p.p2 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica; min-height: 14.0px}
-  </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contract Calculator</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.5.2/dist/cdn.min.js" defer></script>
 </head>
-<body>
-<p class="p1">&lt;!DOCTYPE html&gt;</p>
-<p class="p1">&lt;html lang="en"&gt;</p>
-<p class="p1">&lt;head&gt;</p>
-<p class="p1"><span class="Apple-converted-space">  </span>&lt;meta charset="UTF-8"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">  </span>&lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">  </span>&lt;title&gt;Contract Calculator&lt;/title&gt;</p>
-<p class="p1"><span class="Apple-converted-space">  </span>&lt;link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">  </span>&lt;script src="https://cdn.jsdelivr.net/npm/alpinejs@3.5.2/dist/cdn.min.js" defer&gt;&lt;/script&gt;</p>
-<p class="p1">&lt;/head&gt;</p>
-<p class="p1">&lt;body class="bg-gray-100 flex items-center justify-center min-h-screen"&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">  </span>&lt;div x-data="contractCalculator" class="p-5 bg-white rounded-lg shadow-lg max-w-lg w-full"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;label for="contract-amount" class="font-bold text-gray-700"&gt;Enter Contract Amount:&lt;/label&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;input type="text" id="contract-amount" x-model="contractAmount" placeholder="$2,500.00" required<span class="Apple-converted-space"> </span></p>
-<p class="p1"><span class="Apple-converted-space">           </span>class="w-full p-3 mb-4 border border-gray-300 rounded-md text-right text-lg font-serif"&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;label for="term" class="font-bold text-gray-700"&gt;Select Term:&lt;/label&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;select x-model="selectedTerm" class="w-full p-3 mb-4 border border-gray-300 rounded-md"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;option value="3"&gt;3 Months&lt;/option&gt;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;option value="6"&gt;6 Months&lt;/option&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;/select&gt;</p>
-<p class="p2"><span class="Apple-converted-space">    </span></p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;button @click="calculatePayments" class="px-4 py-2 mr-2 text-white bg-purple-700 rounded-md hover:bg-purple-800"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>Calculate</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;/button&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;button @click="resetCalculator" class="px-4 py-2 text-gray-700 bg-gray-200 rounded-md hover:bg-gray-300"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>Reset</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;/button&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;div x-show="showResult" class="mt-8"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;h3 class="text-lg font-semibold text-gray-700"&gt;Payment Breakdown&lt;/h3&gt;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;table class="w-full border-collapse mb-4"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;tbody&gt;</p>
-<p class="p1"><span class="Apple-converted-space">          </span>&lt;tr&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;td class="font-bold text-gray-700"&gt;Contract Amount:&lt;/td&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;td class="text-right text-purple-800 font-semibold"&gt;{{ formatCurrency(contractAmount) }}&lt;/td&gt;</p>
-<p class="p1"><span class="Apple-converted-space">          </span>&lt;/tr&gt;</p>
-<p class="p1"><span class="Apple-converted-space">          </span>&lt;tr&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;td class="font-bold text-gray-700"&gt;Afterlife Service Charge:&lt;/td&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;td class="text-right text-purple-800 font-semibold"&gt;{{ formatCurrency(serviceCharge) }}&lt;/td&gt;</p>
-<p class="p1"><span class="Apple-converted-space">          </span>&lt;/tr&gt;</p>
-<p class="p1"><span class="Apple-converted-space">          </span>&lt;tr&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;td class="font-bold text-gray-700"&gt;Total Amount:&lt;/td&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;td class="text-right text-purple-800 font-semibold"&gt;{{ formatCurrency(totalAmount) }}&lt;/td&gt;</p>
-<p class="p1"><span class="Apple-converted-space">          </span>&lt;/tr&gt;</p>
-<p class="p1"><span class="Apple-converted-space">          </span>&lt;tr&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;td class="font-bold text-gray-700"&gt;Late Fee (if applicable):&lt;/td&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;td class="text-right text-purple-800 font-semibold"&gt;{{ formatCurrency(lateFee) }}&lt;/td&gt;</p>
-<p class="p1"><span class="Apple-converted-space">          </span>&lt;/tr&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;/tbody&gt;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;/table&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;table class="w-full border-collapse"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;thead&gt;</p>
-<p class="p1"><span class="Apple-converted-space">          </span>&lt;tr class="bg-yellow-200 text-gray-700 font-bold"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;th class="p-2 text-left"&gt;Installment&lt;/th&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;th class="p-2 text-left"&gt;Amount&lt;/th&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;th class="p-2 text-left"&gt;Due Date&lt;/th&gt;</p>
-<p class="p1"><span class="Apple-converted-space">          </span>&lt;/tr&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;/thead&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;tbody&gt;</p>
-<p class="p1"><span class="Apple-converted-space">          </span>&lt;template x-for="(payment, index) in payments" :key="index"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;tr&gt;</p>
-<p class="p1"><span class="Apple-converted-space">              </span>&lt;td class="p-2 font-bold text-gray-700"&gt;{{ payment.installment }}&lt;/td&gt;</p>
-<p class="p1"><span class="Apple-converted-space">              </span>&lt;td class="p-2 text-right font-semibold text-purple-800"&gt;{{ formatCurrency(payment.amount) }}&lt;/td&gt;</p>
-<p class="p1"><span class="Apple-converted-space">              </span>&lt;td class="p-2 text-right"&gt;{{ payment.dueDate }}&lt;/td&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;/tr&gt;</p>
-<p class="p1"><span class="Apple-converted-space">          </span>&lt;/template&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;/tbody&gt;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;/table&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">  </span>&lt;/div&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">  </span>&lt;script&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>function contractCalculator() {</p>
-<p class="p1"><span class="Apple-converted-space">      </span>return {</p>
-<p class="p1"><span class="Apple-converted-space">        </span>contractAmount: '',</p>
-<p class="p1"><span class="Apple-converted-space">        </span>selectedTerm: '3',</p>
-<p class="p1"><span class="Apple-converted-space">        </span>serviceCharge: 0,</p>
-<p class="p1"><span class="Apple-converted-space">        </span>lateFee: 0,</p>
-<p class="p1"><span class="Apple-converted-space">        </span>totalAmount: 0,</p>
-<p class="p1"><span class="Apple-converted-space">        </span>showResult: false,</p>
-<p class="p1"><span class="Apple-converted-space">        </span>payments: [],</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">        </span>calculatePayments() {</p>
-<p class="p1"><span class="Apple-converted-space">          </span>let amount = parseFloat(this.contractAmount.replace(/[^0-9.]/g, '')) || 0;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">          </span>// Determine service charge and late fee based on amount and selected term</p>
-<p class="p1"><span class="Apple-converted-space">          </span>if (this.selectedTerm === '3') {</p>
-<p class="p1"><span class="Apple-converted-space">            </span>if (amount &lt;= 2499.99) { this.serviceCharge = 100; this.lateFee = 25; }</p>
-<p class="p1"><span class="Apple-converted-space">            </span>else if (amount &lt;= 4999.99) { this.serviceCharge = 200; this.lateFee = 50; }</p>
-<p class="p1"><span class="Apple-converted-space">            </span>else if (amount &lt;= 7499.99) { this.serviceCharge = 300; this.lateFee = 75; }</p>
-<p class="p1"><span class="Apple-converted-space">            </span>else if (amount &lt;= 9999.99) { this.serviceCharge = 400; this.lateFee = 100; }</p>
-<p class="p1"><span class="Apple-converted-space">            </span>else if (amount &lt;= 12499.99) { this.serviceCharge = 500; this.lateFee = 125; }</p>
-<p class="p1"><span class="Apple-converted-space">            </span>else if (amount &lt;= 14999.99) { this.serviceCharge = 600; this.lateFee = 150; }</p>
-<p class="p1"><span class="Apple-converted-space">            </span>else if (amount &lt;= 17499.99) { this.serviceCharge = 700; this.lateFee = 175; }</p>
-<p class="p1"><span class="Apple-converted-space">            </span>else { this.serviceCharge = 800; this.lateFee = 200; }</p>
-<p class="p1"><span class="Apple-converted-space">          </span>} else if (this.selectedTerm === '6') {</p>
-<p class="p1"><span class="Apple-converted-space">            </span>if (amount &lt;= 2499.99) { this.serviceCharge = 200; this.lateFee = 50; }</p>
-<p class="p1"><span class="Apple-converted-space">            </span>else if (amount &lt;= 4999.99) { this.serviceCharge = 400; this.lateFee = 100; }</p>
-<p class="p1"><span class="Apple-converted-space">            </span>else if (amount &lt;= 7499.99) { this.serviceCharge = 600; this.lateFee = 150; }</p>
-<p class="p1"><span class="Apple-converted-space">            </span>else if (amount &lt;= 9999.99) { this.serviceCharge = 800; this.lateFee = 200; }</p>
-<p class="p1"><span class="Apple-converted-space">            </span>else if (amount &lt;= 12499.99) { this.serviceCharge = 1000; this.lateFee = 250; }</p>
-<p class="p1"><span class="Apple-converted-space">            </span>else if (amount &lt;= 14999.99) { this.serviceCharge = 1200; this.lateFee = 300; }</p>
-<p class="p1"><span class="Apple-converted-space">            </span>else if (amount &lt;= 17499.99) { this.serviceCharge = 1400; this.lateFee = 350; }</p>
-<p class="p1"><span class="Apple-converted-space">            </span>else { this.serviceCharge = 1600; this.lateFee = 400; }</p>
-<p class="p1"><span class="Apple-converted-space">          </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">          </span>this.totalAmount = amount + this.serviceCharge;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">          </span>// Calculate installment payments based on term length</p>
-<p class="p1"><span class="Apple-converted-space">          </span>const installmentCount = parseInt(this.selectedTerm);</p>
-<p class="p1"><span class="Apple-converted-space">          </span>const paymentAmount = this.totalAmount / installmentCount;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">          </span>this.payments = Array.from({ length: installmentCount }, (_, i) =&gt; ({</p>
-<p class="p1"><span class="Apple-converted-space">            </span>installment: `${i + 1}${this.ordinalSuffix(i + 1)}`,</p>
-<p class="p1"><span class="Apple-converted-space">            </span>amount: paymentAmount,</p>
-<p class="p1"><span class="Apple-converted-space">            </span>dueDate: this.getDueDate(i),</p>
-<p class="p1"><span class="Apple-converted-space">          </span>}));</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">          </span>this.showResult = true;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>},</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">        </span>resetCalculator() {</p>
-<p class="p1"><span class="Apple-converted-space">          </span>this.contractAmount = '';</p>
-<p class="p1"><span class="Apple-converted-space">          </span>this.showResult = false;</p>
-<p class="p1"><span class="Apple-converted-space">          </span>this.payments = [];</p>
-<p class="p1"><span class="Apple-converted-space">        </span>},</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">        </span>formatCurrency(value) {</p>
-<p class="p1"><span class="Apple-converted-space">          </span>return new Intl.NumberFormat('en-US', {</p>
-<p class="p1"><span class="Apple-converted-space">            </span>style: 'currency',</p>
-<p class="p1"><span class="Apple-converted-space">            </span>currency: 'USD'</p>
-<p class="p1"><span class="Apple-converted-space">          </span>}).format(value);</p>
-<p class="p1"><span class="Apple-converted-space">        </span>},</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">        </span>getDueDate(offset) {</p>
-<p class="p1"><span class="Apple-converted-space">          </span>let today = new Date();</p>
-<p class="p1"><span class="Apple-converted-space">          </span>const termInMonths = this.selectedTerm === '3' ? 1 : 2;</p>
-<p class="p1"><span class="Apple-converted-space">          </span>today.setMonth(today.getMonth() + offset * termInMonths);</p>
-<p class="p1"><span class="Apple-converted-space">          </span>return today.toLocaleDateString();</p>
-<p class="p1"><span class="Apple-converted-space">        </span>},</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">        </span>ordinalSuffix(i) {</p>
-<p class="p1"><span class="Apple-converted-space">          </span>const j = i % 10, k = i % 100;</p>
-<p class="p1"><span class="Apple-converted-space">          </span>if (j === 1 &amp;&amp; k !== 11) return "st";</p>
-<p class="p1"><span class="Apple-converted-space">          </span>if (j === 2 &amp;&amp; k !== 12) return "nd";</p>
-<p class="p1"><span class="Apple-converted-space">          </span>if (j === 3 &amp;&amp; k !== 13) return "rd";</p>
-<p class="p1"><span class="Apple-converted-space">          </span>return "th";</p>
-<p class="p1"><span class="Apple-converted-space">        </span>}</p>
-<p class="p1"><span class="Apple-converted-space">      </span>};</p>
-<p class="p1"><span class="Apple-converted-space">    </span>}</p>
-<p class="p1"><span class="Apple-converted-space">  </span>&lt;/script&gt;</p>
-<p class="p1">&lt;/body&gt;</p>
-<p class="p1">&lt;/html&gt;</p>
+<body class="bg-gray-100 flex items-center justify-center min-h-screen">
+
+  <div x-data="contractCalculator" class="p-5 bg-white rounded-lg shadow-lg max-w-lg w-full">
+    <label for="contract-amount" class="font-bold text-gray-700">Enter Contract Amount:</label>
+    <input type="text" id="contract-amount" x-model="contractAmount" placeholder="$2,500.00" required 
+           class="w-full p-3 mb-4 border border-gray-300 rounded-md text-right text-lg font-serif">
+
+    <label for="term" class="font-bold text-gray-700">Select Term:</label>
+    <select x-model="selectedTerm" class="w-full p-3 mb-4 border border-gray-300 rounded-md">
+      <option value="3">3 Months</option>
+      <option value="6">6 Months</option>
+    </select>
+    
+    <button @click="calculatePayments" class="px-4 py-2 mr-2 text-white bg-purple-700 rounded-md hover:bg-purple-800">
+      Calculate
+    </button>
+    <button @click="resetCalculator" class="px-4 py-2 text-gray-700 bg-gray-200 rounded-md hover:bg-gray-300">
+      Reset
+    </button>
+
+    <div x-show="showResult" class="mt-8">
+      <h3 class="text-lg font-semibold text-gray-700">Payment Breakdown</h3>
+      <table class="w-full border-collapse mb-4">
+        <tbody>
+          <tr>
+            <td class="font-bold text-gray-700">Contract Amount:</td>
+            <td class="text-right text-purple-800 font-semibold">{{ formatCurrency(contractAmount) }}</td>
+          </tr>
+          <tr>
+            <td class="font-bold text-gray-700">Afterlife Service Charge:</td>
+            <td class="text-right text-purple-800 font-semibold">{{ formatCurrency(serviceCharge) }}</td>
+          </tr>
+          <tr>
+            <td class="font-bold text-gray-700">Total Amount:</td>
+            <td class="text-right text-purple-800 font-semibold">{{ formatCurrency(totalAmount) }}</td>
+          </tr>
+          <tr>
+            <td class="font-bold text-gray-700">Late Fee (if applicable):</td>
+            <td class="text-right text-purple-800 font-semibold">{{ formatCurrency(lateFee) }}</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <table class="w-full border-collapse">
+        <thead>
+          <tr class="bg-yellow-200 text-gray-700 font-bold">
+            <th class="p-2 text-left">Installment</th>
+            <th class="p-2 text-left">Amount</th>
+            <th class="p-2 text-left">Due Date</th>
+          </tr>
+        </thead>
+        <tbody>
+          <template x-for="(payment, index) in payments" :key="index">
+            <tr>
+              <td class="p-2 font-bold text-gray-700">{{ payment.installment }}</td>
+              <td class="p-2 text-right font-semibold text-purple-800">{{ formatCurrency(payment.amount) }}</td>
+              <td class="p-2 text-right">{{ payment.dueDate }}</td>
+            </tr>
+          </template>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <script>
+    function contractCalculator() {
+      return {
+        contractAmount: '',
+        selectedTerm: '3',
+        serviceCharge: 0,
+        lateFee: 0,
+        totalAmount: 0,
+        showResult: false,
+        payments: [],
+
+        calculatePayments() {
+          let amount = parseFloat(this.contractAmount.replace(/[^0-9.]/g, '')) || 0;
+
+          // Determine service charge and late fee based on amount and selected term
+          if (this.selectedTerm === '3') {
+            if (amount <= 2499.99) { this.serviceCharge = 100; this.lateFee = 25; }
+            else if (amount <= 4999.99) { this.serviceCharge = 200; this.lateFee = 50; }
+            else if (amount <= 7499.99) { this.serviceCharge = 300; this.lateFee = 75; }
+            else if (amount <= 9999.99) { this.serviceCharge = 400; this.lateFee = 100; }
+            else if (amount <= 12499.99) { this.serviceCharge = 500; this.lateFee = 125; }
+            else if (amount <= 14999.99) { this.serviceCharge = 600; this.lateFee = 150; }
+            else if (amount <= 17499.99) { this.serviceCharge = 700; this.lateFee = 175; }
+            else { this.serviceCharge = 800; this.lateFee = 200; }
+          } else if (this.selectedTerm === '6') {
+            if (amount <= 2499.99) { this.serviceCharge = 200; this.lateFee = 50; }
+            else if (amount <= 4999.99) { this.serviceCharge = 400; this.lateFee = 100; }
+            else if (amount <= 7499.99) { this.serviceCharge = 600; this.lateFee = 150; }
+            else if (amount <= 9999.99) { this.serviceCharge = 800; this.lateFee = 200; }
+            else if (amount <= 12499.99) { this.serviceCharge = 1000; this.lateFee = 250; }
+            else if (amount <= 14999.99) { this.serviceCharge = 1200; this.lateFee = 300; }
+            else if (amount <= 17499.99) { this.serviceCharge = 1400; this.lateFee = 350; }
+            else { this.serviceCharge = 1600; this.lateFee = 400; }
+          }
+
+          this.totalAmount = amount + this.serviceCharge;
+
+          // Calculate installment payments based on term length
+          const installmentCount = parseInt(this.selectedTerm);
+          const paymentAmount = this.totalAmount / installmentCount;
+
+          this.payments = Array.from({ length: installmentCount }, (_, i) => ({
+            installment: `${i + 1}${this.ordinalSuffix(i + 1)}`,
+            amount: paymentAmount,
+            dueDate: this.getDueDate(i),
+          }));
+
+          this.showResult = true;
+        },
+
+        resetCalculator() {
+          this.contractAmount = '';
+          this.showResult = false;
+          this.payments = [];
+        },
+
+        formatCurrency(value) {
+          return new Intl.NumberFormat('en-US', {
+            style: 'currency',
+            currency: 'USD'
+          }).format(value);
+        },
+
+        getDueDate(offset) {
+          let today = new Date();
+          const termInMonths = this.selectedTerm === '3' ? 1 : 2;
+          today.setMonth(today.getMonth() + offset * termInMonths);
+          return today.toLocaleDateString();
+        },
+
+        ordinalSuffix(i) {
+          const j = i % 10, k = i % 100;
+          if (j === 1 && k !== 11) return "st";
+          if (j === 2 && k !== 12) return "nd";
+          if (j === 3 && k !== 13) return "rd";
+          return "th";
+        }
+      };
+    }
+  </script>
 </body>
 </html>
